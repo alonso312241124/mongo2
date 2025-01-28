@@ -61,6 +61,38 @@ const buscaPrecioMayor = (precio) => {
     .catch(err=>console.error('Error al obtener los ordenadores', err));
 }
 
+const crearNuevoOrdenador = (m, p) =>{
+    const nuevoOrdenador = new Ordenador({
+        marca: m,
+        precio: p
+      });
+    nuevoOrdenador.save()
+        .then(ordenador => console.log('Ordenador guardado:', ordenador))
+        .catch(err => console.error('Error al guardar el ordenador:', err));
+}
 
+const actualizaPrecio = (idOrdenador, nuevoPrecio) =>{
+    Ordenador.findByIdAndUpdate(idOrdenador, { precio: nuevoPrecio }, { new: true })
+    .then(ordenadorActualizado => {
+        if (ordenadorActualizado) {
+            console.log('Ordenador actualizado:', ordenadorActualizado);
+        } else {
+            console.log('No se encontró ningún ordenador con ese ID.');
+        }
+    })
+    .catch(err => console.error('Error al actualizar el ordenador:', err));
+}
 
-module.exports = {buscaPrimero, buscaTodos, buscaPorId, buscaPrecioMayor, Ordenador}
+const borraOrdenador = (idOrdenadorParaBorrar) => {
+    Ordenador.findByIdAndDelete(idOrdenadorParaBorrar)
+    .then(ordenadorEliminado => {
+        if (ordenadorEliminado) {
+          console.log('Ordenador eliminado:', ordenadorEliminado);
+        } else {
+          console.log('No se encontró ningún ordenador con ese ID.');
+        }
+    })
+    .catch(err => console.error('Error al eliminar el ordenador:', err));
+}
+
+module.exports = {buscaPrimero, buscaTodos, buscaPorId, buscaPrecioMayor, crearNuevoOrdenador, actualizaPrecio, borraOrdenador, Ordenador}

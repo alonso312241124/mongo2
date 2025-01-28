@@ -1,3 +1,5 @@
 const modeloOrdenador = require('./models/ordenador')
 
-modeloOrdenador.buscaPrecioMayor(2000);
+const idEjemplo = '67990f14896b90f93cdcadec'
+
+modeloOrdenador.borraOrdenador(idEjemplo)
