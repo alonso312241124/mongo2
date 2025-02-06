@@ -37,16 +37,11 @@
         function eliminaOrdenador(id){
             if(confirm("Quieres eliminar el registro?")){
                 fetch('/items/' + id,{
-                method: 'DELETE'
-            })
-            .then(response =>{
-                if(response.ok){
+                    method: 'DELETE'
+                })
+                .then(response =>{
                     document.getElementById(id).remove();
-                    alert("Eliminado");
-                }else{
-                    alert("Error")
-                }
-            })
+                })
             }
         }
     </script>
