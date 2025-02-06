@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Lista ordenadores</h1>
-    <select name="" id="seleccionaOrdenador">
+    <select name="seleccionaOrdenador" id="seleccionaOrdenador">
 
     </select>
     <script>
@@ -15,15 +15,30 @@
     fetch('/items')
         .then(response =>response.json())
         .then(ordenadores=>{
-            
             for ( ordenador of ordenadores){
                 opcion = document.createElement('option');
                 opcion.id = ordenador._id;
-                opcion.innerHTML = ` ${ordenador.marca} | ${ordenador.precio} €`
+                opcion.innerHTML = ` ${ordenador.marca} | ${ordenador.precio} €`;
                 document.getElementById('seleccionaOrdenador').appendChild(opcion);
             }
         })
 
+        const traeOrdenador=()=>{
+            id = document.getElementById('seleccionaOrdenador').value;
+            fetch('/items/' + id)
+            .then(response => response.json())
+            .then(ordenador =>{
+                document.getElementById('marca').value = ordenador.marca;
+                document.getElementById('precio').value = ordenador.precio;
+            })
+        }
+
+        document.getElementById('seleccionaOrdenador').addEventListener('change', traeOrdenador)
+
     </script>
+
+    <p>Marca: <input type="text" name="marca" id="marca"></p>
+    <p>Precio: <input type="number" name="precio" id="precio"></p>
+    <button id="btn-insertar">Insertar</button>
 </body>
 </html>
