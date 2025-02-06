@@ -26,27 +26,37 @@ const buscaPrimero = () => {
 }
 
 const buscaTodos = () => {
-    Ordenador.find()
+    return Ordenador.find()
     .then(ordenadores =>{
         if(ordenadores.length>0){
             console.log('Ordenadores encontrados ', ordenadores)
+            return ordenadores;
         }else{
             console.log('No se encontró ningún registro')
+            return null;    
         }
     })
-    .catch(err=>console.error('Error al obtener los ordenadores', err));
+    .catch(err=>{
+        console.error('Error al obtener los ordenadores', err);
+        throw err;
+    });
 }
 
 const buscaPorId = (id) => {
-    Ordenador.findById(id)
+    return Ordenador.findById(id)
     .then(ordenador =>{
         if(ordenador){
             console.log('Primer ordenador encontrado', ordenador)
+            return ordenador;
         }else{
             console.log('No se encontró ningún registro')
+            return null;
         }
     })
-    .catch(err=>console.error('Error al obtener el ordenador'));
+    .catch(err=>{
+        console.error('Error al obtener el ordenador');
+        throw err;
+    });
 }
 
 const buscaPrecioMayor = (precio) => {

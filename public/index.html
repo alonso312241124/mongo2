@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Listado de ordenadores</h1>
+    <table id="tablaProducto">
+        <thead>
+            <tr>
+                <th>Id</th><th>marca</th><th>Precio</th><th>Borrar</th>             
+            </tr>
+        </thead>
+        <tbody id="cuerpo-tabla">
+
+        </tbody>
+    </table>
+    <script>
+
+
+        fetch('/items')
+        .then(response =>response.json())
+        .then(ordenadores=>{
+            
+            console.log(ordenadores);
+            for ( ordenador of ordenadores){
+                fila = document.createElement('tr');
+                fila.innerHTML = `  <td>${ordenador._id}</td>
+                                    <td>${ordenador.marca}</td>
+                                    <td>${ordenador.precio}</td>
+                                    <td><button onclick="eliminaOrdenador('${ordenador._id}')">Borrar ordenador</button>`;
+                document.getElementById('cuerpo-tabla').appendChild(fila);
+            }
+        })
+     
+        function eliminaOrdenador(id){
+            fetch('/items/' + id,{
+                method: 'DELETE'
+            })
+            .then(response =>{
+                if(response.ok){
+                    alert("Eliminado")
+                }else{
+                    alert("Error")
+                }
+            })
+        }
+    </script>
+</body>
+</html>
