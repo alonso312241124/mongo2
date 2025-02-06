@@ -94,15 +94,20 @@ const actualizaPrecio = (idOrdenador, nuevoPrecio) =>{
 }
 
 const borraOrdenador = (idOrdenadorParaBorrar) => {
-    Ordenador.findByIdAndDelete(idOrdenadorParaBorrar)
-    .then(ordenadorEliminado => {
-        if (ordenadorEliminado) {
-          console.log('Ordenador eliminado:', ordenadorEliminado);
-        } else {
-          console.log('No se encontró ningún ordenador con ese ID.');
-        }
-    })
-    .catch(err => console.error('Error al eliminar el ordenador:', err));
+    return Ordenador.findByIdAndDelete(idOrdenadorParaBorrar)
+        .then(ordenadorEliminado => {
+            if (ordenadorEliminado) {
+                console.log('Ordenador eliminado:', ordenadorEliminado);
+                return ordenadorEliminado;  
+            } else {
+                console.log('No se encontró ningún ordenador con ese ID.');
+                return null;
+            }
+        })
+        .catch(err => {
+            console.error('Error al eliminar el ordenador:', err);
+            throw err; 
+        });
 }
 
 module.exports = {buscaPrimero, buscaTodos, buscaPorId, buscaPrecioMayor, crearNuevoOrdenador, actualizaPrecio, borraOrdenador, Ordenador}

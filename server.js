@@ -33,7 +33,7 @@ app.get("/items/:id", (req, res) => {
 app.post("/items", (req, res) => {
     marca= req.body.marca;
     precio= req.body.precio;
-    modeloOrdenador.creaNuevoOrdenador(marca,precio)
+    modeloOrdenador.crearNuevoOrdenador(marca,precio)
     .then(
       ordenador=>res.status(200).json(ordenador)
     )

@@ -18,8 +18,6 @@
         </tbody>
     </table>
     <script>
-
-
         fetch('/items')
         .then(response =>response.json())
         .then(ordenadores=>{
@@ -27,6 +25,7 @@
             console.log(ordenadores);
             for ( ordenador of ordenadores){
                 fila = document.createElement('tr');
+                fila.id = ordenador._id;
                 fila.innerHTML = `  <td>${ordenador._id}</td>
                                     <td>${ordenador.marca}</td>
                                     <td>${ordenador.precio}</td>
@@ -36,16 +35,19 @@
         })
      
         function eliminaOrdenador(id){
-            fetch('/items/' + id,{
+            if(confirm("Quieres eliminar el registro?")){
+                fetch('/items/' + id,{
                 method: 'DELETE'
             })
             .then(response =>{
                 if(response.ok){
-                    alert("Eliminado")
+                    document.getElementById(id).remove();
+                    alert("Eliminado");
                 }else{
                     alert("Error")
                 }
             })
+            }
         }
     </script>
 </body>

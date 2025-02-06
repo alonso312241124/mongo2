@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Lista ordenadores</h1>
+    <select name="" id="seleccionaOrdenador">
+
+    </select>
+    <script>
+
+    fetch('/items')
+        .then(response =>response.json())
+        .then(ordenadores=>{
+            
+            for ( ordenador of ordenadores){
+                opcion = document.createElement('option');
+                opcion.id = ordenador._id;
+                opcion.innerHTML = ` ${ordenador.marca} | ${ordenador.precio} €`
+                document.getElementById('seleccionaOrdenador').appendChild(opcion);
+            }
+        })
+
+    </script>
+</body>
+</html>
