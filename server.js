@@ -42,18 +42,18 @@ app.post("/items", (req, res) => {
 });
 
 
-// Actualizar un ítem existente
 app.put("/items/:id", (req, res) => {
-  const itemId = parseInt(req.params.id);
-  const itemIndex = items.findIndex((i) => i.id === itemId);
-  if (itemIndex !== -1) {
-    items[itemIndex].name = req.body.name;
-    res.json(items[itemIndex]);
-  } else {
-    res.status(404).json({ message: "Ítem no encontrado" });
-  }
-});
-
+  const idOrdenador = req.params.id;
+  const nuevoPrecio = req.body.precio;
+  modeloOrdenador.actualizaPrecio(idOrdenador, nuevoPrecio)
+    .then(() => {
+      res.json({ message: "Precio actualizado correctamente." });
+    })
+    .catch(err => {
+      console.error('Error al actualizar el ordenador:', err);
+      res.status(500).json({ message: "Error al actualizar el ordenador" });
+    });
+})
 
 // Eliminar un ítem
 app.delete("/items/:id", (req, res) => {

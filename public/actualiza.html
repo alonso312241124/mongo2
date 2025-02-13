@@ -10,6 +10,12 @@
     <select name="seleccionaOrdenador" id="seleccionaOrdenador">
 
     </select>
+
+    <p>Id: <input type="text" id="id" size="30" readonly></p>
+    <p>Marca: <input type="text" name="marca" id="marca"></p>
+    <p>Precio: <input type="number" name="precio" id="precio"></p>
+    <button id="btnInsertar">Actualizar</button>
+
     <script>
 
     fetch('/items')
@@ -17,28 +23,45 @@
         .then(ordenadores=>{
             for ( ordenador of ordenadores){
                 opcion = document.createElement('option');
-                opcion.id = ordenador._id;
+                opcion.value = ordenador._id;
                 opcion.innerHTML = ` ${ordenador.marca} | ${ordenador.precio} €`;
                 document.getElementById('seleccionaOrdenador').appendChild(opcion);
             }
         })
 
         const traeOrdenador=()=>{
-            id = document.getElementById('seleccionaOrdenador').value;
+            const id = document.getElementById('seleccionaOrdenador').value;
             fetch('/items/' + id)
             .then(response => response.json())
             .then(ordenador =>{
+                document.getElementById('id').value = id;
                 document.getElementById('marca').value = ordenador.marca;
                 document.getElementById('precio').value = ordenador.precio;
             })
         }
 
+        const actualizaOrdenador = () => {
+            let id = document.getElementById('seleccionaOrdenador').value;
+            let marca = document.getElementById('marca').value;
+            let precio = document.getElementById('precio').value;
+
+            fetch('/items/' + id, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ marca, precio })
+            }).then(
+                ordenador =>{
+                    console.log("Ordenador actualizado:", ordenador);
+                }
+            )
+        };
+
+
         document.getElementById('seleccionaOrdenador').addEventListener('change', traeOrdenador)
+        document.getElementById('btnInsertar').addEventListener('click', actualizaOrdenador)
 
     </script>
-
-    <p>Marca: <input type="text" name="marca" id="marca"></p>
-    <p>Precio: <input type="number" name="precio" id="precio"></p>
-    <button id="btn-insertar">Insertar</button>
 </body>
 </html>
